@@ -18,8 +18,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @TeleOp(name="Telejr2425", group="Linear OpMode")
 //@Disabled
-public class Telejr2425 extends LinearOpMode {
-
+public class Telejr extends LinearOpMode {
 
 
 
@@ -55,10 +54,9 @@ public class Telejr2425 extends LinearOpMode {
         intakeFront.setPower(power);
         intakeBack.setPower(power * -1);
     }
-    private void timir(time) {
+    private void timir(double time) {
         ElapsedTime timer3 = new ElapsedTime();
         while (opModeIsActive() && timer3.seconds() < time) {
-            telemetry.addData("timir-tRuEeEeEeEe");
             telemetry.update();
         }
     }
@@ -142,8 +140,6 @@ public class Telejr2425 extends LinearOpMode {
         while (opModeIsActive()) {
 
 
-
-
             if (gamepad2.left_bumper) {
                 bar.setPower(0.7);
             } else if (gamepad2.right_bumper) {
@@ -223,27 +219,19 @@ public class Telejr2425 extends LinearOpMode {
                 ITR.setPosition(0);
                 Intake(0);
 
-
-//Resets the bar's Position
-                if (bar.getPosition() < -10){
+                if (bar.getCurrentPosition() < -10){
                     bar.setPower(0);
-                    bar.STOP_AND_RESET_ENCODERS
-                    bar.START_USING_ENCODERS
+                    bar.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    bar.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
 
-
-//Gives time to do that
                 timir(3);
 
-
-//Spits out block
                 Intake(-1);
                 timir(1.5);
 
-
-//Stopped
                 Intake(0);
-                barmove(140);
+                Barmove(140,1);
 
 
             }
@@ -259,13 +247,10 @@ public class Telejr2425 extends LinearOpMode {
                 sleep(1000);
             }
             if(Bucket.getPosition() > 0.37 && Bucket.getPosition() < 0.415){
-                GO1 = false;l
+                GO1 = false;
                 Bucket.setPosition(0.8);
                 Slidesmove(-200,0.75);
             }
-
-
-
 
             // Touch Sensors
             if (LeftSensor.isPressed() || RightSensor.isPressed() && GO1 == false) {
@@ -278,15 +263,6 @@ public class Telejr2425 extends LinearOpMode {
                 SlideRight.setPower(0);
                 Bucket.setPosition(1);
             }
-            if(){
-
-
-
-
-            }
-
-
-
 
             // telemetry.addData("SlideLeft-Pos", SlideLeft.getCurrentPosition());
             //telemetry.addData("SlideLeft-Pow", SlideLeft.getPower());
